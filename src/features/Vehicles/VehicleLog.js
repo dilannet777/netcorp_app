@@ -1,26 +1,26 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Table, Button} from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { vehiclesSelector, fetchVehicleLog, clearState } from './VehiclesSlice';
 import Loader from 'react-loader-spinner';
-import { useHistory,useParams  } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const VehicleLog = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { isFetching, isError,isSuccess } = useSelector(vehiclesSelector);
+  const { isFetching, isError, isSuccess } = useSelector(vehiclesSelector);
   const { vid } = useParams();
-  
+
 
 
   useEffect(() => {
-   
-     dispatch(fetchVehicleLog({  token:localStorage.getItem('token') ,vid}));
+
+    dispatch(fetchVehicleLog({ token: localStorage.getItem('token'), vid }));
   }, []);
 
-  const {vehicleLg} = useSelector(vehiclesSelector);
-  
+  const { vehicleLg } = useSelector(vehiclesSelector);
+
   useEffect(() => {
     if (isError) {
       dispatch(clearState());
@@ -34,47 +34,60 @@ const VehicleLog = () => {
     history.push('/login');
   };
 
+  const back = () => {
+    history.push('/');
+  };
+
+
   return (
     <div className="container mx-auto">
       {isFetching ? (
         <Loader type="Puff" color="#00BFFF" height={100} width={100} />
       ) : (
         <Fragment>
-          <div className="container mx-auto"><button
+
+          <div class="row p-3" >
+            <div class="col">
+              <h3>Vehicle Log</h3>
+            </div>
+            <div class="col p-3">
+            <Button  onClick={back}  variant="secondary">Back</Button>{' '}
+            <button
             onClick={onLogOut}
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           >
             Log Out
           </button>
-            <h3>Vehicle Log Count</h3>
+         </div>
           </div>
           <Table striped bordered hover>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Year-Mon</th>
-      <th>Count</th>
-    </tr>
-  </thead>
-  <tbody>
-  {vehicleLg.data && vehicleLg.data.map((row, i) => {
-            
-              return (
-                <tr>
-      <td>{row.vehicle_id}</td>
-      <td>{row.name}</td>
-      <td>{row.year_month}</td>
-      <td>{row.count}</td>
-    </tr>
-              );
-            })}
-  
-  </tbody>
-</Table>
-          
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Year-Mon</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vehicleLg.data && vehicleLg.data.map((row, i) => {
+
+                return (
+                  <tr>
+                    <td>{row.vehicle_id}</td>
+                    <td>{row.name}</td>
+                    <td>{row.year_month}</td>
+                    <td>{row.count}</td>
+                  </tr>
+                );
+              })}
+
+            </tbody>
+          </Table>
+      
         </Fragment>
-      )}
+  )
+}
     </div>
   );
 };

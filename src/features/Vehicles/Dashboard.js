@@ -40,24 +40,26 @@ const Dashboard = () => {
     history.push('/login');
   };
 
+ 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto g-6">
       {isFetching ? (
         <Loader type="Puff" color="#00BFFF" height={100} width={100} />
       ) : (
         <Fragment>
           <div className="container mx-auto">
-            <div class="row" >
+            <div class="row p-3" >
             <div class="col">
             <h3>Active Vehicles List</h3>
             </div>
-              <div class="col">
-            <button
+              <div class="col p-3">
+             
+            <Button
             onClick={onLogOut}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            variant="light"
           >
             Log Out
-          </button>
+          </Button>
          </div>
         
           </div>

@@ -39,25 +39,37 @@ const VehicleLastLog = () => {
     history.push('/login');
   };
 
+  const back = () => {
+    history.push('/');
+  };
+
  
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-6">
       {isFetching ? (
         <Loader type="Puff" color="#00BFFF" height={100} width={100} />
       ) : (
         <Fragment>
-          <div className="container mx-auto"><button
+            <div className="container mx-auto">
+            <div class="row p-3" >
+            <div class="col">
+            <h3>Vehicle Last Location</h3>
+            </div>
+            <div class="col p-3">
+            <Button  onClick={back}  variant="secondary">Back</Button>{' '}
+            <button
             onClick={onLogOut}
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           >
             Log Out
           </button>
-            <h3>Vehicle Last Log</h3>
+         </div>
+        
           </div>
        {isSuccess  &&  <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyBfngSRaXQ-5PgGPisXG4S1lKmm7clT9PA' }}
+          bootstrapURLKeys={{ key: `${process.env.REACT_APP_GOOGLE_MAP_KEY}` }}
           style={mapStyles}
           initialCenter={
             {
@@ -105,7 +117,7 @@ const VehicleLastLog = () => {
   
   </tbody>
 </Table>
-          
+        </div>  
         </Fragment>
       )}
     </div>

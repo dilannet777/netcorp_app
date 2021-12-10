@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchVehicles= createAsyncThunk(
   'vehicles/list',
   async ({ token }, thunkAPI) => {
-   debugger;
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_HOST}vehicles`,
@@ -37,7 +37,7 @@ export const fetchVehicles= createAsyncThunk(
 export const fetchVehicleLog= createAsyncThunk(
   'vehicle/log',
   async ({ token,vid }, thunkAPI) => {
-   debugger;
+ 
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_HOST}vehicle/logcount/`+vid,
@@ -69,7 +69,7 @@ export const fetchVehicleLog= createAsyncThunk(
 export const fetchVehicleLastLog= createAsyncThunk(
   'vehicle/lastlog',
   async ({ token,vid }, thunkAPI) => {
-   debugger;
+  
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_HOST}vehicle/lastlog/`+vid,
