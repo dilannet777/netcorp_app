@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchVehicles= createAsyncThunk(
   'vehicles/list',
   async ({ token }, thunkAPI) => {
-   
+   debugger;
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_HOST}vehicles`,
@@ -34,10 +34,76 @@ export const fetchVehicles= createAsyncThunk(
   }
 );
 
+export const fetchVehicleLog= createAsyncThunk(
+  'vehicle/log',
+  async ({ token,vid }, thunkAPI) => {
+   debugger;
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}vehicle/logcount/`+vid,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+  
+        }
+      );
+      let data = await response.json();
+      console.log('data', data, response.status);
+
+      if (response.status === 200) {
+        return { ...data };
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e) {
+      console.log('Error', e.response.data);
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const fetchVehicleLastLog= createAsyncThunk(
+  'vehicle/lastlog',
+  async ({ token,vid }, thunkAPI) => {
+   debugger;
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}vehicle/lastlog/`+vid,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+  
+        }
+      );
+      let data = await response.json();
+      console.log('data', data, response.status);
+
+      if (response.status === 200) {
+        return { ...data };
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e) {
+      console.log('Error', e.response.data);
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const vehiclesSlice = createSlice({
   name: 'vehicles',
   initialState: {
     vehicles:[],
+    vehicleLg:[],
+    vehicleLastLg:[],
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -71,7 +137,46 @@ export const vehiclesSlice = createSlice({
       state.isFetching = false;
       state.isError = true;
     },
+
+    [fetchVehicleLog.pending]: (state) => {
+      state.isFetching = true;
+    },
+    [fetchVehicleLog.fulfilled]: (state, { payload }) => {
+  
+      state.isFetching = false;
+      state.isSuccess = true;
+
+      state.vehicleLg = payload;
+      console.log( state. vehicleLog);
+     
+    },
+    [fetchVehicleLog.rejected]: (state) => {
+ 
+      console.log('fetchVehicleLog');
+      state.isFetching = false;
+      state.isError = true;
+    },
+    [fetchVehicleLastLog.pending]: (state) => {
+      state.isFetching = true;
+    },
+    [fetchVehicleLastLog.fulfilled]: (state, { payload }) => {
+  
+      state.isFetching = false;
+      state.isSuccess = true;
+
+      state. vehicleLastLg = payload;
+      console.log( state. vehicleLog);
+     
+    },
+    [fetchVehicleLastLog.rejected]: (state) => {
+ 
+      console.log('fetchVehicleLastLog');
+      state.isFetching = false;
+      state.isError = true;
+    },
+
   },
+  
 });
 
 export const { clearState } = vehiclesSlice.actions;

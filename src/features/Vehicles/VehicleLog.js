@@ -1,32 +1,26 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Table, Button} from 'react-bootstrap';
-import { vehiclesSelector, fetchVehicles, clearState } from './VehiclesSlice';
+import { vehiclesSelector, fetchVehicleLog, clearState } from './VehiclesSlice';
 import Loader from 'react-loader-spinner';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useParams  } from 'react-router-dom';
 
-const Dashboard = () => {
+const VehicleLog = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { isFetching, isError } = useSelector(vehiclesSelector);
+  const { isFetching, isError,isSuccess } = useSelector(vehiclesSelector);
+  const { vid } = useParams();
   
-  const viewLogCount = (id) => {
-    history.push('/vehicle-log/'+id);
-  };
-
-  const viewLastLog = (id) => {
-    history.push('/vehicle-last-log/'+id);
-  };
 
 
   useEffect(() => {
-  
-     dispatch(fetchVehicles({ token: localStorage.getItem('token') }));
+   
+     dispatch(fetchVehicleLog({  token:localStorage.getItem('token') ,vid}));
   }, []);
 
-  const {vehicles } = useSelector(vehiclesSelector);
-
+  const {vehicleLg} = useSelector(vehiclesSelector);
+  
   useEffect(() => {
     if (isError) {
       dispatch(clearState());
@@ -52,33 +46,26 @@ const Dashboard = () => {
           >
             Log Out
           </button>
-            <h3>Active vehicles List</h3>
+            <h3>Vehicle Log Count</h3>
           </div>
           <Table striped bordered hover>
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>AgiDrive</th>
-      <th>Action</th>
+      <th>Year-Mon</th>
+      <th>Count</th>
     </tr>
   </thead>
   <tbody>
-  {vehicles.data && vehicles.data.map((row, i) => {
+  {vehicleLg.data && vehicleLg.data.map((row, i) => {
             
               return (
                 <tr>
-      <td>{row.id}</td>
+      <td>{row.vehicle_id}</td>
       <td>{row.name}</td>
-      <td>{row.is_agidrive}</td>
-      {row.is_agidrive=='on' ? (  <td><>
-  <Button onClick={() => viewLogCount(row.id)} variant="primary"  active>
-    Log Count
-  </Button>{' '}
-  <Button onClick={() => viewLastLog(row.id)}  active>
-    Last Info
-  </Button>
-</></td>):''}
+      <td>{row.year_month}</td>
+      <td>{row.count}</td>
     </tr>
               );
             })}
@@ -92,4 +79,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default VehicleLog;
