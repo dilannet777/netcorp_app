@@ -1,19 +1,35 @@
-<<<<<<< HEAD
-# netcorp_app
-=======
-## Modern React Redux Toolkit - User Login & Registration Example
+## The front-end of the application, built in ReactJS
 
-### Demo
+The dashboard provides the statistic of vehicles' routes.
 
-![Demo]('https://raw.githubusercontent.com/ganeshmani/redux-toolkit-user-flow/master/demo.gif')
+### Prerequisites
 
-### Libraries Used
--  [React/Redux Toolkit](https://redux-toolkit.js.org/)
--  [React Hook Form](https://react-hook-form.com/)
--  [Tailwind CSS](https://tailwindcss.com/)
+* Node.js ^v14.15.1
+* npm or yarn
 
 
-> Note: we use Craco for Tailwind CSS and Create React App configuration. [Reference](https://tailwindcss.com/docs/guides/create-react-app)
+### Project setup
+```
+yarn install OR npm install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn start
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Available Features
+
+* Active vehicles list
+* Vehicles' log count for each month
+* Vehicle's last location information
 
 
->>>>>>> 0ffe26d (First commit)
+### Backend Code
+
+GitHub URL : [Click Here](https://github.com/dilannet777/netcorp_app_api)
