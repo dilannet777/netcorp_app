@@ -150,21 +150,7 @@ export const userSlice = createSlice({
     [loginUser.pending]: (state) => {
       state.isFetching = true;
     },
-  /*  [fetchUserBytoken.pending]: (state) => {
-      state.isFetching = true;
-    },
-    [fetchUserBytoken.fulfilled]: (state, { payload }) => {
-      state.isFetching = false;
-      state.isSuccess = true;
 
-      state.email = payload.email;
-      state.username = payload.name;
-    },
-    [fetchUserBytoken.rejected]: (state) => {
-      console.log('fetchUserBytoken');
-      state.isFetching = false;
-      state.isError = true;
-    },*/
   },
 });
 

@@ -46,13 +46,20 @@ const Dashboard = () => {
         <Loader type="Puff" color="#00BFFF" height={100} width={100} />
       ) : (
         <Fragment>
-          <div className="container mx-auto"><button
+          <div className="container mx-auto">
+            <div class="row" >
+            <div class="col">
+            <h3>Active Vehicles List</h3>
+            </div>
+              <div class="col">
+            <button
             onClick={onLogOut}
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           >
             Log Out
           </button>
-            <h3>Active vehicles List</h3>
+         </div>
+        
           </div>
           <Table striped bordered hover>
   <thead>
@@ -85,7 +92,7 @@ const Dashboard = () => {
   
   </tbody>
 </Table>
-          
+</div>    
         </Fragment>
       )}
     </div>
